@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class FifthPartOne {
+public class Fifth {
     public static void main(String[] args) throws IOException {
         Map<Integer, Set<Integer>> before = new HashMap<>();
         URL input = Second.class.getClassLoader().getResource("input5.txt");
         int out = 0;
+        List<List<Integer>> failed = new ArrayList<>();
         try (FileReader fileReader = new FileReader(input.getFile())) {
             try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
                 String currLine = bufferedReader.readLine();
@@ -31,10 +32,12 @@ public class FifthPartOne {
                 currLine = bufferedReader.readLine();
                 linesLoop:
                 while (currLine != null) {
+                    List<Integer> original = new ArrayList<>();
                     List<Integer> available = new ArrayList<>();
                     String[] curr = currLine.split(",");
                     for (String x : curr) {
                         int value = Integer.parseInt(x);
+                        original.add(value);
                         available.add(value);
                     }
                     int mid = available.get(available.size() / 2);
@@ -42,6 +45,7 @@ public class FifthPartOne {
                         Set<Integer> banned = before.get(available.removeLast());
                         for (Integer x : available) {
                             if (banned.contains(x)) {
+                                failed.add(original);
                                 currLine = bufferedReader.readLine();
                                 continue linesLoop;
                             }
@@ -52,6 +56,19 @@ public class FifthPartOne {
                 }
             }
         }
-        System.out.println(out);
+        System.out.printf("Part One result: %d", out);
+
+    }
+    private static List<Integer> getTopologicalSort(Map<Integer, Set<Integer>> before) {
+        Set<Integer> seen = new HashSet<>();
+        List<Integer> topologicalSort = new ArrayList<>();
+        for (Integer key : before.keySet()) {
+
+        }
+        return topologicalSort;
+    }
+
+    private static void traverse(Integer curr, Map<Integer, Set<Integer>> before, List<Integer> topologicalSort, Set<Integer> seen) {
+
     }
 }
