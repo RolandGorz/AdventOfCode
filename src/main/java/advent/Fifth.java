@@ -15,7 +15,7 @@ public class Fifth {
     public static void main(String[] args) throws IOException {
         Map<Integer, Set<Integer>> before = new HashMap<>();
         URL input = Second.class.getClassLoader().getResource("input5.txt");
-        int out = 0;
+        int out1 = 0;
         List<List<Integer>> failed = new ArrayList<>();
         try (FileReader fileReader = new FileReader(input.getFile())) {
             try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
@@ -51,24 +51,23 @@ public class Fifth {
                             }
                         }
                     }
-                    out += mid;
+                    out1 += mid;
                     currLine = bufferedReader.readLine();
                 }
             }
         }
-        System.out.printf("Part One result: %d", out);
-
-    }
-    private static List<Integer> getTopologicalSort(Map<Integer, Set<Integer>> before) {
-        Set<Integer> seen = new HashSet<>();
-        List<Integer> topologicalSort = new ArrayList<>();
-        for (Integer key : before.keySet()) {
-
+        System.out.printf("Part One result: %d%n", out1);
+        int out2 = 0;
+        for (List<Integer> x : failed) {
+            x.sort((a,b) -> {
+                if (before.get(a).contains(b)) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            });
+            out2 += x.get(x.size() / 2);
         }
-        return topologicalSort;
-    }
-
-    private static void traverse(Integer curr, Map<Integer, Set<Integer>> before, List<Integer> topologicalSort, Set<Integer> seen) {
-
+        System.out.printf("Part Two result: %d%n", out2);
     }
 }
